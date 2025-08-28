@@ -17,6 +17,7 @@ Vagrant.configure("2") do |config|
   haproxyServer.vm.box = "bento/ubuntu-22.04"
   haproxyServer.vm.network :private_network, ip: "192.168.100.20"
   haproxyServer.vm.hostname = "haproxyServer"
+  haproxyServer.vm.provision "shell", inline: $install_puppet
   haproxyServer.vm.provision :puppet do |puppet|
     puppet.manifests_path = "puppet/manifests"
     puppet.manifest_file = "site.pp"
@@ -28,6 +29,7 @@ Vagrant.configure("2") do |config|
     web1Server.vm.box = "bento/ubuntu-22.04"
     web1Server.vm.network :private_network, ip: "192.168.100.30"
     web1Server.vm.hostname = "web1Server"
+    web1Server.vm.provision "shell", inline: $install_puppet
     web1Server.vm.provision :puppet do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file = "site.pp"
@@ -39,6 +41,7 @@ Vagrant.configure("2") do |config|
     web2Server.vm.box = "bento/ubuntu-22.04"
     web2Server.vm.network :private_network, ip: "192.168.100.40"
     web2Server.vm.hostname = "web2Server"
+    web2Server.vm.provision "shell", inline: $install_puppet
     web2Server.vm.provision :puppet do |puppet|
       puppet.manifests_path = "puppet/manifests"
       puppet.manifest_file = "site.pp"
