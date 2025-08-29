@@ -1,0 +1,24 @@
+config:
+  target: "http://192.168.100.20"
+  phases:
+    - duration: 5
+      arrivalRate: 100
+    - duration: 10
+      arrivalRate: 100
+      rampTo: 200
+    - duration: 5
+      arrivalRate: 200
+  http:
+    timeout: 2000
+    pool: 100
+  plugins:
+    expect: {}
+scenarios:
+  - name: "Home + API browse"
+    flow:
+      - get:
+          url: "/"
+          expect:
+            - statusCode: 200
+processors:
+  - "./processor.js"
