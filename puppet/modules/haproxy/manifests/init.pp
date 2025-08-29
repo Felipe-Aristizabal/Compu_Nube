@@ -12,6 +12,24 @@ class haproxy {
     require => Package['haproxy'],
   }
 
+  file { '/etc/haproxy/errors':
+    ensure => directory,
+    owner  => 'root',
+    group  => 'root',
+    mode   => '0755',
+    require => Package['haproxy'],
+  }
+
+  file { '/etc/haproxy/errors/web_down.http':
+    ensure  => file,
+    owner   => 'root',
+    group   => 'root',
+    mode    => '0644',
+    source  => 'puppet:///modules/haproxy/web_down.http',
+    require => File['/etc/haproxy/errors'],
+    notify  => Exec['haproxy-validate'],
+  }
+
   file { '/etc/sysctl.d/99-icmp.conf':
     ensure  => file,
     mode    => '0644',
